@@ -174,6 +174,12 @@ trivy: $(TRIVY) ## Download trivy
 $(TRIVY):
 	curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $(BIN_DIR)
 
+
+## --------------------------------------
+## Build all the binaries
+## --------------------------------------
+all: trivy kapp imgpkg vendir kbld ytt conversion-gen yq vale gobindata kustomize kubebuilder goimports golangci-lint counterfeiter ginkgo controller-gen
+
 ## --------------------------------------
 ## Cleanup
 ## --------------------------------------
