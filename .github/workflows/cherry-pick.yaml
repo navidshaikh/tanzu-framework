@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    branches:
+      - main
+    types: ["closed"]
+
+jobs:
+  cherry_pick_release_v0_28:
+    runs-on: ubuntu-latest
+    name: Cherry pick into release-0.28 brach
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cherry pick into release-0.28
+        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+        with:
+          branch: release-0.28
+          labels: |
+            "backports/release-0.28"
+
+
