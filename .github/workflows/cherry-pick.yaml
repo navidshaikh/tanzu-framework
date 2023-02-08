@@ -20,8 +20,13 @@ jobs:
       - name: Cherry pick into release-0.28
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
         with:
+          token: $GITHUB_TOKEN
+          committer: Alfred the Narwhal <noreply@github.com>
+          author: Alfred the Narwhal <noreply@github.com>
           branch: release-0.28
           labels: |
             "backports/release-0.28"
+          title: cherry-pick PR
+          cherry-pick-branch: topic/alfredthenarwhal/cp-${inputs.branch}-${commitSha}
 
 
