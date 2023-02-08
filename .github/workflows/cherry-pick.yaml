@@ -26,7 +26,6 @@ jobs:
           branch: release-0.28
           labels: |
             "backports/release-0.28"
-          title: cherry-pick PR
           cherry-pick-branch: topic/alfredthenarwhal/cp-${inputs.branch}-${commitSha}
 
 
