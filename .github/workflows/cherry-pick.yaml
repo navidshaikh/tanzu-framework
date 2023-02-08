@@ -18,8 +18,8 @@ jobs:
       - name: Cherry pick into release-0.28
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
         with:
-          token: ${{ secrets.NAVID_PAT }}
-          committer: Navid Shaikh <noreply@github.com>
-          author: Navid Shaikh <noreply@github.com>
+          token: ${{ secrets.ALFRED_PAT }}
+          committer: Alfred the Narwhal <noreply@github.com>
+          author: Alfred the Narwhal <noreply@github.com>
           branch: release-0.28
           labels: "backports/release-0.28"
