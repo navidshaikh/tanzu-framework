@@ -9,7 +9,7 @@ jobs:
   cherry_pick_release_v0_28:
     runs-on: ubuntu-latest
     name: Cherry pick into release-0.28 brach
-    if: contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28')
+    if: contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28') && github.event.pull_request.merged == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,4 +22,6 @@ jobs:
           committer: Alfred the Narwhal <noreply@github.com>
           author: Alfred the Narwhal <noreply@github.com>
           branch: release-0.28
+          title: '[release-0.28] cherry-pick#{old_pull_request_id}: {old_title}'
+          body: ${{ github.event.pull_request.body }}
           labels: "backports/release-0.28"
