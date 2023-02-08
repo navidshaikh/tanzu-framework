@@ -9,8 +9,6 @@ jobs:
   cherry_pick_release_v0_28:
     runs-on: ubuntu-latest
     name: Cherry pick into release-0.28 brach
-    env:
-      GITHUB_TOKEN: ${{ secrets.ALFRED_PAT }}
     if: contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28')
     steps:
       - name: Checkout
@@ -20,9 +18,8 @@ jobs:
       - name: Cherry pick into release-0.28
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
         with:
-          token: $GITHUB_TOKEN
-          committer: Alfred the Narwhal <noreply@github.com>
-          author: Alfred the Narwhal <noreply@github.com>
+          token: ${{ secrets.NAVID_PAT }}
+          committer: Navid Shaikh <noreply@github.com>
+          author: Navid Shaikh <noreply@github.com>
           branch: release-0.28
-          labels: |
-            "backports/release-0.28"
+          labels: "backports/release-0.28"
