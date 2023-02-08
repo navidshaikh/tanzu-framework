@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Cherry pick into release-0.28 brach
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.ALFRED_PAT }}
     if: contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28')
     steps:
       - name: Checkout
