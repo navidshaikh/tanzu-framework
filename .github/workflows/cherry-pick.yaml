@@ -22,6 +22,6 @@ jobs:
           committer: Alfred the Narwhal <noreply@github.com>
           author: Alfred the Narwhal <noreply@github.com>
           branch: release-0.28
-          title: '[release-0.28] cherry-pick {old_pull_request_id}: {old_title}'
+          title: '[release-0.28] cherry-pick ${{github.event.number}} : {old_title}'
           body: 'Cherry-pick of #{old_pull_request_id} into release-0.28 branch'
           labels: "backports/release-0.28"
