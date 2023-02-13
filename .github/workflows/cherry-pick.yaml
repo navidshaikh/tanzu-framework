@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Cherry-pick into release-0.28 brach
     if: ${{ contains(github.event.pull_request.labels.*.name, 'cherry-pick/release-0.28') && github.event.pull_request.merged == true }}
+    outputs:
+      pr_url: ${{ steps.cherrypick.outputs.html_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,21 +37,27 @@ jobs:
     steps:
       - id: check
         uses: martialonline/workflow-status@v3
-      - uses: peter-evans/create-or-update-comment@v2
+      - name: post failure message
+        uses: peter-evans/create-or-update-comment@v2
         if: steps.check.outputs.status == 'failure'
         with:
+          token: ${{ secrets.ALFRED_PAT }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Failed to create cherry-pick PR, workflow failed (usually due to merge conflcits), please create the cherry-pick PR manually.
-      - uses: peter-evans/create-or-update-comment@v2
+      - name: post success message
+        uses: peter-evans/create-or-update-comment@v2
         if: steps.check.outputs.status == 'success'
         with:
+          token: ${{ secrets.ALFRED_PAT }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Created cherry-pick PR.
-      - uses: peter-evans/create-or-update-comment@v2
+            Created cherry-pick PR ${{ needs.cherry_pick_release_v0_28.outputs.pr_url }}
+      - name: post cancelled workflow message
+        uses: peter-evans/create-or-update-comment@v2
         if: steps.check.outputs.status == 'cancelled'
         with:
+          token: ${{ secrets.ALFRED_PAT }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Cherry-pick workflow is cancelled, please re-run the workflow manually.
