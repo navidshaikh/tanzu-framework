@@ -33,26 +33,22 @@ jobs:
     needs: [cherry_pick_release_v0_28]
     if: always()
     steps:
-      - name: Check the status of the cherry-pick job
+      - id: check
         uses: martialonline/workflow-status@v3
-        id: check
-      - name: Add cherry-pick status
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.check.outputs.status == "failure"
+      - uses: peter-evans/create-or-update-comment@v2
+        if: steps.check.outputs.status == 'failure'
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Failed to create cherry-pick PR, workflow failed (usually due to merge conflcits), please create the cherry-pick PR manually.
-      - name: Comment cherry-pick success status
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.check.outputs.status == "success"
+      - uses: peter-evans/create-or-update-comment@v2
+        if: steps.check.outputs.status == 'success'
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Created cherry-pick PR.
-      - name: Add cherry-pick workflow cancelled status
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.check.outputs.status == "cancelled"
+      - uses: peter-evans/create-or-update-comment@v2
+        if: steps.check.outputs.status == 'cancelled'
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
